@@ -1,0 +1,48 @@
+nav{
+    background-color: #F1E7CE;
+}
+a{
+    color: white;
+}
+main{
+    width: 100vw ;
+
+    background-color: #FFD60A ;
+    height: 90vh;
+}
+
+.bodymain{
+    background-color: gold;
+}
+.col1{
+    margin-top: 5px;
+    border: 4px solid wheat;
+    height: 88vh;
+}
+.col2{
+    margin-top: 5px;
+    border: 4px solid wheat;
+    width: 73vw;
+}
+.loopbox{
+    border: 5px solid red;
+    margin: 5px ;
+}
+.profilepic{
+    width: 23vw;
+    height: 40vh;
+    padding: 20px;
+}
+.blogupload{
+    margin: 2px;
+    border: 5px solid wheat;
+}
+.viewblog{
+    margin: 2px;
+    border: 5px solid wheat;
+}
+footer{
+    background-color: #FFF3F3;
+    width: 100vw;
+    height: 5vh;
+}

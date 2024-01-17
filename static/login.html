@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration-bloggz</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/index.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg nav">
+        <div class="container-fluid">
+              <a class="navbar-brand" href="#">Blogzz</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+                </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+             <ul class="navbar-nav">
+                  <li class="nav-item">
+                     <a class="nav-link active" aria-current="page" href="./index.html">Home</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="./view.html">View Blogs</a>
+                   </li>
+               </ul>
+           </div> 
+        <div class="me-2"><a href="./login.html"></a><button class="btn btn-primary">Sign In</button></a></div>
+        
+      <div class="me-2"><a href="./register.html"><button class="btn btn-primary">Sign Up</button></a></div>
+        </div>
+      </div>
+      </nav>
+</header>
+<main>
+
+  <div class="row ">
+    <div class="col-4"></div>
+    <div class="col-4 form mt-5"><form onsubmit="loginHandler(event)">
+      <div class="row"><center><caption>Welcome</caption></center></div>
+      <div class="row"><input type="text" name="username" id="username" class="mb-2" placeholder="username"></div>
+      <div class="row"><input type="password" name="password" id="password" class="mb-2" placeholder="password"></div>
+      <div class="row"><div class="col-5"></div><div class="col-2"><input type="submit" value="submit" class="mb-2"></div><div class="col-5"></div></div>
+    </form>
+      <div class="row"></div>
+    </div>
+   
+  </div>
+
+<!--     
+<form onsubmit="uploadHandler(event)">
+<input type="text" name="username" id="username" placeholder="username">
+<input type="password" name="password" id="password" placeholder="password">
+<input type="submit" value="submit">
+</form> -->
+</main>
+<footer>Thank You</footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <script>
+      async function loginHandler(event){
+       event.preventDefault();
+       let username=event.target[0].value;
+       let password=event.target[1].value;
+       fetch("http://localhost:3000/login",{
+        method:"post",
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+          username,password
+        })
+       })
+       .then(res =>{
+        if(res.status == 200){
+                    return res.json();
+                }
+                alert("unable to login");
+       })
+       .then((data)=>{
+        console.log(data);
+        localStorage.setItem("token",data.token);
+        localStorage.setItem("username",username);
+        console.log(data);
+        alert(data.msg);
+        location.href="http://localhost:3000/static/profile.html";
+       })
+       .catch(error =>{
+                console.log(error);
+            })
+      }
+    </script>
+</body>
+</html>

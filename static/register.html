@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration-bloggz</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/index.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg nav">
+        <div class="container-fluid">
+              <a class="navbar-brand" href="#">Blogzz</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+                </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+             <ul class="navbar-nav">
+                  <li class="nav-item">
+                     <a class="nav-link active" aria-current="page" href="./index.html">Home</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="./view.html">View Blogs</a>
+                   </li>
+               </ul>
+           </div> 
+        <div class="me-2"><a href="./login.html"><button class="btn btn-primary">Sign In</button></a></div>
+        
+      <div class="me-2"><a href="./register.html"><button class="btn btn-primary">Sign Up</button></a></div>
+        </div>
+      </div>
+      </nav>
+</header>
+<main>
+
+  <div class="row ">
+    <div class="col-4"></div>
+    <div class="col-4 form mt-5"><form onsubmit="uploadHandler(event)">
+      <div class="row"><img src="" alt="Profile_picture" class="imgreg " id="img"></div> 
+      <div class="row"><input type="file" class="mb-2" name="image" accept=".image/*" onchange="changeImg(event)" ></div>
+      <div class="row"><input type="text" name="username" id="username" class="mb-2" placeholder="username"></div>
+      <div class="row"><input type="password" name="password" id="password" class="mb-2" placeholder="password"></div>
+      <div class="row"><div class="col-5"></div><div class="col-2"><input type="submit" value="submit" class="mb-2"></div><div class="col-5"></div></div>
+    </form>
+      <div class="row"></div>
+    </div>
+   
+  </div>
+
+<!--     
+<form onsubmit="uploadHandler(event)">
+<input type="text" name="username" id="username" placeholder="username">
+<input type="password" name="password" id="password" placeholder="password">
+<input type="submit" value="submit">
+</form> -->
+</main>
+<footer>Thank You</footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <script>
+      async function uploadHandler(event){
+        event.preventDefault();
+        let image=event.target[0].files[0];
+        let username=event.target[1].value;
+        let password=event.target[2].value;
+        let base64image=await convert(image);
+        fetch("http://localhost:3000/register",{
+          method:"post",
+          headers:{
+            "Content-Type":"application/json"
+          },body:JSON.stringify({
+            image:base64image,
+            username,
+            password
+          })
+        })
+        .then(res =>res.text())
+        .then((data)=>{
+          alert(data);
+          location.href="http://localhost:3000/static/login.html"
+        })
+        .catch(error=>{
+          console.log(error);
+        })
+      }
+      function convert(file){
+        return new Promise((res,rej)=>{
+          let fileReader= new FileReader();
+          fileReader.readAsDataURL(file);
+          fileReader.onload=()=>{
+            res(fileReader.result);
+          }
+          fileReader.onerror=(error)=>{
+            rej(error);
+          }
+        });
+      }
+      function changeImg(event){
+        let image=event.target.files[0];
+        convert(image)
+        .then(base64image=>{
+          console.log(image);
+          document.querySelector("img").src=base64image;
+        })
+      }
+    </script>
+</body>
+</html>
